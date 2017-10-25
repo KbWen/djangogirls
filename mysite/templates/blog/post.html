@@ -1,0 +1,68 @@
+<!-- templates/post.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ post.title }} | Wen Blog</title>
+</head>
+<body>
+    <div class="header">
+        <h1>
+            <a href="/">Wen Blog</a>
+        </h1>
+    </div>
+    <div>
+        <div>
+            <h1 class="title">{{ post.title }}</h1>
+            <div class="date">{{ post.created_time|date:'Y / m / d' }}</div>
+        </div>
+
+        <div></div>
+        <div class="post-content">
+            {{ post.content }}
+        </div>
+        <span class="views-count">{{ post.views }} count</span>
+        <hr class="fancy-line">
+    </div>
+    <form action="" method="post">
+    {% csrf_token %}
+        <div>
+            <div>
+                <label for="{{ form.name.id_for_label }}">name:</label>
+                    {{ form.name }}
+                    {{ form.name.errors }}
+            </div>
+            <div>
+                <label for="{{ form.email.id_for_label }}">email</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+            </div>
+            <div>
+                <label for="{{ form.url.id_for_label }}">URL：</label>
+                    {{ form.url }}
+                    {{ form.url.errors }}
+            </div>
+            <div>
+                <label for="{{ form.text.id_for_label }}">comment:</label>
+                    {{ form.text }}
+                    {{ form.text.errors }}
+                <button type="submit" class="comment-btn">add comment</button>
+            </div>
+        </div>    <!-- row -->
+    </form>
+    <ul class="comment-list">
+        {% for comment in comment_list %}
+        <li>
+        <span>{{ comment.name }}</span>
+        <time>{{ comment.created_time }}</time>
+        <div>
+            {{ comment.text }}
+        </div>
+        </li>
+            {% empty %}
+                no comment
+            {% endfor %}
+    </ul>
+</body>
+</html>
